@@ -28,7 +28,7 @@
 				<!-- IF isTopicOrMain -->
 				<input class="title form-control" type="text" tabindex="1" placeholder="[[topic:composer.title_placeholder]]" value="{title}"/>
 				<!-- ELSE -->
-				<span class="title form-control">[[topic:composer.replying_to, "{title}"]]</span>
+				<span class="title form-control alkun-control ">[[topic:composer.replying_to, "{title}"]]</span>
 				<!-- ENDIF isTopicOrMain -->
 				<ul class="dropdown-menu quick-search-results hidden">
 					<!-- IMPORT partials/quick-search-results.tpl -->

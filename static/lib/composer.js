@@ -246,11 +246,20 @@ define('composer', [
 	};
 
 	composer.newReply = function(tid, toPid, title, text) {
+		let dom = $('[component="post"] [data-pid="' + toPid + '"]')
+		let father =  dom.parents('[component="post"]');
+		let fatherPid = father.attr("data-pid")
+
+		if(fatherPid) {
+			toPid = fatherPid
+		} 
+		
 		translator.translate(text, config.defaultLang, function(translated) {
 			push({
 				action: 'posts.reply',
 				tid: tid,
 				toPid: toPid,
+				// toPid: fatherPid,
 				title: title,
 				body: translated,
 				modified: false,
@@ -636,7 +645,6 @@ define('composer', [
 		}
 
 		var composerData = {};
-
 		if (action === 'topics.post') {
 			composerData = {
 				handle: handleEl ? handleEl.val() : undefined,
@@ -647,6 +655,7 @@ define('composer', [
 				tags: tags.getTags(post_uuid)
 			};
 		} else if (action === 'posts.reply') {
+			// 一级，二级回复走这里
 			composerData = {
 				tid: postData.tid,
 				handle: handleEl ? handleEl.val() : undefined,
@@ -663,7 +672,6 @@ define('composer', [
 				tags: tags.getTags(post_uuid)
 			};
 		}
-
 		$(window).trigger('action:composer.submit', {
 			composerEl: postContainer,
 			action: action,
